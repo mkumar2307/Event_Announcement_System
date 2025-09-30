@@ -29,3 +29,24 @@ DynamoDB → store event data (name, date, description, etc.) for history.
 
 [User] --> [API Gateway] --> [Lambda] --> [DynamoDB] --> [SNS Topic] --> [Subscribers]            
 
+## Deployment Steps
+
+Package Lambda:         
+
+```bash
+cd lambda/announce_event
+zip -r announce_event.zip *
+aws s3 cp announce_event.zip s3://your-lambda-code-bucket/
+```
+
+Initialize Terraform:            
+
+```terraform init```
+
+Plan:        
+
+```terraform plan -var-file="terraform.tfvars"```
+
+Apply:           
+
+```terraform apply -var-file="terraform.tfvars"```
