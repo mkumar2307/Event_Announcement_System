@@ -25,9 +25,7 @@ DynamoDB → store event data (name, date, description, etc.) for history.
 5. SNS sends notifications to subscribers (Email/SMS/etc.).       
 
 
-## Diagram:          
+## Flow Diagram:          
 
-[User] --> [API Gateway] --> [Lambda] --> [DynamoDB]         
-                                      \         
-                                       --> [SNS Topic] --> [Subscribers]            
+[User] --> [API Gateway] --> [Lambda] --> [DynamoDB] --> [SNS Topic] --> [Subscribers]            
 
