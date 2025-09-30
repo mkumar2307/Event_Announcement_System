@@ -14,21 +14,20 @@ DynamoDB → store event data (name, date, description, etc.) for history.
 
 ## Architecture
 
-User calls API Gateway endpoint to create an event.         
+1. User calls API Gateway endpoint to create an event.         
 
-API Gateway triggers a Lambda function.         
+2. API Gateway triggers a Lambda function.         
 
-Lambda stores event data in DynamoDB.         
+3. Lambda stores event data in DynamoDB.         
 
-Lambda publishes the event to an SNS Topic.       
+4. Lambda publishes the event to an SNS Topic.       
 
-SNS sends notifications to subscribers (Email/SMS/etc.).       
+5. SNS sends notifications to subscribers (Email/SMS/etc.).       
 
 
-Diagram:          
+## Diagram:          
 
 [User] --> [API Gateway] --> [Lambda] --> [DynamoDB]         
                                       \         
                                        --> [SNS Topic] --> [Subscribers]            
-
 
