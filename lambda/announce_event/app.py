@@ -13,10 +13,18 @@ TABLE_NAME = os.environ.get('DYNAMODB_TABLE', '')
 def lambda_handler(event, context):
     try:
         body = json.loads(event['body'])
+        
+        # Validate required fields
+        if 'name' not in body or 'date' not in body:
+            return {
+                'statusCode': 400,
+                'body': json.dumps({'error': 'Missing required fields: name and date'})
+            }
+        
         event_name = body['name']
         event_date = body['date']
         event_desc = body.get('description', '')
-
+        
         # Store in DynamoDB
         if TABLE_NAME:
             dynamodb_client.put_item(
@@ -28,7 +36,7 @@ def lambda_handler(event, context):
                     'description': {'S': event_desc}
                 }
             )
-
+        
         # Publish to SNS
         message = f"New Event: {event_name} on {event_date}. Details: {event_desc}"
         sns_client.publish(
@@ -36,12 +44,22 @@ def lambda_handler(event, context):
             Message=message,
             Subject='New Event Announcement'
         )
-
+        
         return {
             'statusCode': 200,
             'body': json.dumps({'message': 'Event announced successfully!'})
         }
-
+    
+    except json.JSONDecodeError:
+        return {
+            'statusCode': 400,
+            'body': json.dumps({'error': 'Invalid JSON in request body'})
+        }
+    except KeyError as e:
+        return {
+            'statusCode': 400,
+            'body': json.dumps({'error': f'Missing required field: {str(e)}'})
+        }
     except Exception as e:
         return {
             'statusCode': 500,
