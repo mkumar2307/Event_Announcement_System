@@ -1,5 +1,5 @@
 # Event Announcement System
-Build a system where users can create events via an API, and subscribers receive notifications (email/SMS/push) whenever a new event is announced using AWS SNS, Lambda, and API Gateway.       
+A system where users can create events via an API, and subscribers receive notifications (email/SMS/push) whenever a new event is announced using AWS SNS, Lambda, and API Gateway.       
 
 ## AWS Services to Use:
 
